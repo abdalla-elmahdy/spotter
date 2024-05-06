@@ -1,0 +1,24 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}
+  Home
+{% endblock title %}
+{% block content %}
+  <section class="grid">
+    <div>
+      <h1>Take Your Training Anywhere With You</h1>
+      <p>
+        Spotter is a web app powered by computer vision to help you train anywhere,
+        organize your training plan, and track your progress over time.
+        With Spotter, you can easily analyze your form and technique to ensure you are getting the most out of your workouts. 
+      </p>
+      {% if user.is_authenticated != True %}
+        <a href="#" role="button">Sign Up</a>
+      {% endif %}
+    </div>
+    <div>
+      <img src="{% static 'images/hero.svg' %}"
+           alt="A man exercising illustration">
+    </div>
+  </section>
+{% endblock content %}
