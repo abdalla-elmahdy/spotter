@@ -13,7 +13,7 @@
         With Spotter, you can easily analyze your form and technique to ensure you are getting the most out of your workouts. 
       </p>
       {% if user.is_authenticated != True %}
-        <a href="#" role="button">Sign Up</a>
+        <a href="{% url 'account_signup' %}" role="button">Sign Up</a>
       {% endif %}
     </div>
     <div>

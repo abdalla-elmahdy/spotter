@@ -28,11 +28,34 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    # 3rd party apps
+    "allauth",
+    "allauth.account",
     # local apps
     "apps.accounts.apps.AccountsConfig",
     "apps.pages.apps.PagesConfig",
     "apps.plans.apps.PlansConfig",
 ]
+
+# django-allauth config
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+LOGIN_REDIRECT_URL = "pages:home"
+ACCOUNT_LOGOUT_REDIRECT = "pages:home"
+ACCOUNT_FORMS = {
+    "signup": "apps.accounts.forms.CustomUserCreationForm",
+}
+ACCOUNT_MAX_EMAIL_ADDRESSES = 1
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
@@ -44,6 +67,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"

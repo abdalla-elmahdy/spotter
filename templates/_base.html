@@ -24,7 +24,7 @@
         <nav>
           <ul>
             <li>
-              <a href="#">
+              <a href="{% url 'pages:home' %}">
                 <img src="{% static 'images/logo.png' %}"
                      alt="Spotter's logo"
                      class="logo">
@@ -44,20 +44,20 @@
                       <a href="#">My Plans</a>
                     </li>
                     <li>
-                      <a href="#">Change Password</a>
+                      <a href="{% url 'account_change_password' %}">Change Password</a>
                     </li>
                     <li>
-                      <a href="#">Logout</a>
+                      <a href="{% url 'account_logout' %}">Logout</a>
                     </li>
                   </ul>
                 </details>
               </li>
             {% else %}
               <li>
-                <a href="#" role="button" class="secondary">Login</a>
+                <a href="{% url 'account_login' %}" role="button" class="secondary">Login</a>
               </li>
               <li>
-                <a href="#" role="button">Sign Up</a>
+                <a href="{% url 'account_signup' %}" role="button">Sign Up</a>
               </li>
             {% endif %}
           </ul>
