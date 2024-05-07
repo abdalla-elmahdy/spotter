@@ -1,5 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
+CustomUser = get_user_model()
 
 class Session(models.Model):
     class StateChoices(models.TextChoices):
@@ -7,6 +9,7 @@ class Session(models.Model):
         UNFINISHED = "UF", "Unfinished"
         FINISHED = "FN", "Finished"
 
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sessions")
     time = models.DateTimeField()
     workouts_break = models.IntegerField()
     state = models.CharField(max_length=2,
@@ -41,10 +44,10 @@ class Exercise(models.Model):
         return self.name
 
 class Workout(models.Model):
-    Session = models.ForeignKey(Session,
+    session = models.ForeignKey(Session,
                                 on_delete=models.CASCADE,
                                 related_name="workouts")
-    Exercise = models.ForeignKey(Exercise,
+    exercise = models.ForeignKey(Exercise,
                                  on_delete=models.CASCADE,
                                  related_name="workouts")
     sets = models.IntegerField()

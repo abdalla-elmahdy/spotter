@@ -1,0 +1,37 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}
+  Session Details
+{% endblock title %}
+{% block content %}
+  
+  <div class="grid">
+    <h2>Session Details</h2>
+    <button class="secondary"><a href="#">Delete Session</a></button>
+  </div>
+  <p>{{ session.time }}</p>
+  <p>Break between workouts: {{ session.workouts_break }} seconds</p>
+  {% if session.workouts.all %}
+  {% for workout in session.workouts.all %}
+  <details>
+    <summary>{{ workout.exercise.name }}</summary>
+    <article>{{ workout.exercise.desc }}</article>
+    <article>
+        Sets: {{ workout.sets }}
+        Reps for each set: {{ workout.reps_per_set }}
+        Rest between sets: {{ workout.break_time }}
+    </article>
+    <div class="grid">
+        <button><a href="#" class="secondary">Edit Workout</a></button>
+        <button class="secondary"><a href="#" >Delete Workout</a></button>
+    </div>
+    </details>  
+  {% endfor %}
+  {% else %}
+  <p>You haven't added any workouts yet</p>
+  {% endif %}
+  <div class="grid">
+    <button><a href="{% url 'plans:workout_create' session.id %}" class="secondary">Add Workout</a></button>
+    <button class="secondary"><a href="{% url 'plans:delete' session.id %}" >Delete Session</a></button>
+</div>
+{% endblock content %}

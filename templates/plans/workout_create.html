@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+{% block title %}
+  New Session
+{% endblock title %}
+{% block content %}
+  <h2>Add Workout</h2>
+  <form action="{% url 'plans:workout_create' parent_session %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create">
+  </form>
+{% endblock %}

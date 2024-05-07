@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}
+  Dashboard
+{% endblock title %}
+{% block content %}
+  {% if session %}
+  {{ session.time }}
+  {% else %}
+  <p>You don't have any upcoming sessions</p>
+  {% endif %}
+{% endblock content %}
