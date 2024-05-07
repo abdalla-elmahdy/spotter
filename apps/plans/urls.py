@@ -26,8 +26,23 @@ urlpatterns = [
         name="workout_create",
     ),
     path(
-        "",
+        "workout/<int:pk>",
+        views.WorkoutUpdateView.as_view(),
+        name="workout_update",
+    ),
+    path(
+        "workout/delete/<int:pk>/",
+        views.WorkoutDeleteView.as_view(),
+        name="workout_delete",
+    ),
+    path(
+        "dashboard/",
         views.DashboardView.as_view(),
         name="dashboard",
+    ),
+    path(
+        "",
+        views.SessionListView.as_view(),
+        name="list",
     ),
 ]

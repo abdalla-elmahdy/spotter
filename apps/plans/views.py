@@ -12,6 +12,22 @@ from .models import Session, Workout
 
 CustomUser = get_user_model()
 
+class SessionListView(LoginRequiredMixin, generic.ListView):
+    """
+    Get:
+        Displays a list of the logged-in user's created sessions
+    Context:
+        - session_list: iterable of the logged-in user's created sessions
+    Template name: plans/list.html
+    """
+
+    context_object_name = "session_list"
+    template_name = "plans/list.html"
+
+    def get_queryset(self):
+        return CustomUser.objects.get(id=self.request.user.id).sessions.all()
+
+
 class DashboardView(LoginRequiredMixin ,generic.DetailView):
     """
     Get:
@@ -29,7 +45,7 @@ class DashboardView(LoginRequiredMixin ,generic.DetailView):
 
     def get_object(self, queryset=None):
         queryset = CustomUser.objects.get(id=self.request.user.id).sessions.all()
-        obj = queryset.last()
+        obj = queryset.first()
         return obj
 
 
@@ -113,3 +129,40 @@ class WorkoutCreateView(LoginRequiredMixin, generic.CreateView):
         context = super().get_context_data(**kwargs)
         context["parent_session"] = self.kwargs["session"]
         return context
+
+
+class WorkoutUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """
+    Uses the instance's pk passed in the url path to retrieve it from DB
+    Get:
+        Displays an instance WorkoutForm model populated with the instance's data
+    Post:
+        Updates an instance of Workout model using WorkoutForm that has the current user as owner,
+        otherwise returns 403 response
+    Context:
+        - Workout: the instance of Workout the user wants to update
+        - form: an instance of WorkoutForm
+    Template used: plans/workout_update.html
+    """
+
+    model = Workout
+    form_class = WorkoutForm
+    template_name = "plans/workout_update.html"
+    context_object_name = "workout"
+
+    def get_success_url(self):
+        return reverse("plans:dashboard")
+
+class WorkoutDeleteView(LoginRequiredMixin, generic.DeleteView):
+    """
+    Uses the instance's pk passed in the url path to retrieve it from DB
+    Get:
+        Displays a confirmation form to delete the instance or cancel
+    Post:
+        Deletes the instance if the current user as owner, otherwise returns 403 response
+    """
+
+    model = Workout
+    context_object_name = "workout"
+    template_name = "plans/workout_delete.html"
+    success_url = reverse_lazy("plans:dashboard")

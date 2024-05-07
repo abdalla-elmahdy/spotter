@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 CustomUser = get_user_model()
 
@@ -17,10 +18,13 @@ class Session(models.Model):
                              default=StateChoices.UPCOMING)
 
     class Meta:
-        ordering = ['-time']
+        ordering = ['time']
         indexes = [
-            models.Index(fields=['-time']),
+            models.Index(fields=['time']),
         ]
+    
+    def get_absolute_url(self):
+        return reverse("plans:detail", args=[str(self.id)])
 
 
 class Exercise(models.Model):

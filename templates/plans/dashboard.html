@@ -5,7 +5,43 @@
 {% endblock title %}
 {% block content %}
   {% if session %}
-  {{ session.time }}
+  <article class="session-card">
+    <h2>Next Session</h2>
+    <p id="session-time">{{ session.time }}</p>
+    <a href="#" role="button">Start Now</a>
+  </article>
+  <article>
+    {% if session.workouts.all %}
+    <h3>Upcoming Session Details</h3>
+  {% for workout in session.workouts.all %}
+  <details>
+    <summary>{{ workout.exercise.name }}</summary>
+    <article>{{ workout.exercise.desc }}</article>
+    <article>
+      <p>
+        Sets: {{ workout.sets }}
+      </p>
+      <p>
+        Reps for each set: {{ workout.reps_per_set }}
+      </p>
+      <p>
+        Rest between sets: {{ workout.break_time }}
+      </p>
+    </article>
+    <div class="grid">
+        <a href="{% url 'plans:workout_update' workout.id %}" role="button">Edit Workout</a>
+        <a href="{% url 'plans:workout_delete' workout.id %}" class="secondary" role="button" >Delete Workout</a>
+    </div>
+    </details>  
+  {% endfor %}
+  {% else %}
+  <p>You haven't added any workouts yet to the upcoming session</p>
+  {% endif %}
+  <div class="grid">
+    <a href="{% url 'plans:workout_create' session.id %}" role="button">Add Workout</a>
+    <a href="{% url 'plans:delete' session.id %}" class="secondary" role="button">Delete Session</a>
+</div>
+  </article>
   {% else %}
   <p>You don't have any upcoming sessions</p>
   {% endif %}

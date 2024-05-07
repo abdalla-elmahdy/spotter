@@ -17,13 +17,19 @@
     <summary>{{ workout.exercise.name }}</summary>
     <article>{{ workout.exercise.desc }}</article>
     <article>
+      <p>
         Sets: {{ workout.sets }}
+      </p>
+      <p>
         Reps for each set: {{ workout.reps_per_set }}
+      </p>
+      <p>
         Rest between sets: {{ workout.break_time }}
+      </p>
     </article>
     <div class="grid">
-        <button><a href="#" class="secondary">Edit Workout</a></button>
-        <button class="secondary"><a href="#" >Delete Workout</a></button>
+      <a href="{% url 'plans:workout_update' workout.id %}" role="button">Edit Workout</a>
+      <a href="{% url 'plans:workout_delete' workout.id %}" class="secondary" role="button" >Delete Workout</a>
     </div>
     </details>  
   {% endfor %}
@@ -31,7 +37,7 @@
   <p>You haven't added any workouts yet</p>
   {% endif %}
   <div class="grid">
-    <button><a href="{% url 'plans:workout_create' session.id %}" class="secondary">Add Workout</a></button>
-    <button class="secondary"><a href="{% url 'plans:delete' session.id %}" >Delete Session</a></button>
-</div>
+    <a href="{% url 'plans:workout_create' session.id %}" role="button">Add Workout</a>
+    <a href="{% url 'plans:delete' session.id %}" class="secondary" role="button">Delete Session</a>
+  </div>
 {% endblock content %}
