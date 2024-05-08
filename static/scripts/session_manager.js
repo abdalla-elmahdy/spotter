@@ -149,7 +149,7 @@ async function pipeline() {
         lastVideoTime = video.currentTime;
         poseLandmarker.detectForVideo(video, startTimeMs, (result) => {
             let landmarks = result.landmarks[0];
-            feedbackPanel.innerText = sessionData.workouts[currentWorkout].name
+            feedbackPanel.innerText = sessionData.workouts[currentWorkout].exercise.name
 		feedbackPanel.innerText += ` - Set : ${currentSet+1}`
 		// Calculating the angle for each required joint
 		const joints = {};
@@ -211,7 +211,16 @@ async function pipeline() {
 			correct_joints = 0;
 			console.log(rep_counter);
 			counterPanel.innerText = ` ${rep_counter}`; 
-		}
+		} else if (correct_joints !== 0) {
+      for (const joint in joints) {
+        if (joints[joint].correct === 0) {
+          let feedback = `Keep your ${joint.replace("_", " ")} at ${min_angles[joint]} degrees in the start of the rep and ${max_angles[joint]} in the end of it`;
+          feedbackPanel.innerText = feedback;
+          utterance = new SpeechSynthesisUtterance(feedback);
+          speechSynthesis.speak(utterance);
+        }
+      }
+    }
 				// Drawing logic
 		canvasCtx.save();
 		canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);

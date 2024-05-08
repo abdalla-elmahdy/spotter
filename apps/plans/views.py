@@ -172,7 +172,7 @@ class SessionApiView(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SessionSerializer
 
     def get_object(self, queryset = None):
-        queryset = CustomUser.objects.get(id=self.request.user.id).sessions.all()
+        queryset = CustomUser.objects.get(id=self.request.user.id).sessions.filter(state__exact="UP")
         obj = queryset.first()
         return obj
 
