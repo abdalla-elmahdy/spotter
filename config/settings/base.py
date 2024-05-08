@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     "allauth",
     "allauth.account",
+    "rest_framework",
     # local apps
     "apps.accounts.apps.AccountsConfig",
     "apps.pages.apps.PagesConfig",

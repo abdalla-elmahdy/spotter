@@ -8,7 +8,7 @@
   <article class="session-card">
     <h2>Next Session</h2>
     <p id="session-time">{{ session.time }}</p>
-    <a href="#" role="button">Start Now</a>
+    <a href="{% url 'pages:session_manager' %}" role="button">Start Now</a>
   </article>
   <article>
     {% if session.workouts.all %}

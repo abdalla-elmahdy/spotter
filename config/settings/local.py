@@ -20,3 +20,10 @@ DATABASES = {
 
 # Static files handling
 STATIC_URL = "static/"
+
+# djangorest
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}

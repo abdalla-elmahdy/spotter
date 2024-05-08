@@ -1,5 +1,4 @@
-from typing import Any
-from django.db.models.query import QuerySet
+from rest_framework import generics
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
@@ -9,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from util.mixins import OwnerRequiredMixin
 from .forms import SessionForm, WorkoutForm
 from .models import Session, Workout
+from .serializers import SessionSerializer
 
 CustomUser = get_user_model()
 
@@ -166,3 +166,11 @@ class WorkoutDeleteView(LoginRequiredMixin, generic.DeleteView):
     context_object_name = "workout"
     template_name = "plans/workout_delete.html"
     success_url = reverse_lazy("plans:dashboard")
+
+class SessionApiView(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = SessionSerializer
+
+    def get_object(self, queryset = None):
+        queryset = CustomUser.objects.get(id=self.request.user.id).sessions.all()
+        obj = queryset.first()
+        return obj

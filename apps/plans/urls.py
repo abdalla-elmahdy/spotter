@@ -41,6 +41,11 @@ urlpatterns = [
         name="dashboard",
     ),
     path(
+        "api/",
+        views.SessionApiView.as_view(),
+        name="session_api",
+    ),
+    path(
         "",
         views.SessionListView.as_view(),
         name="list",

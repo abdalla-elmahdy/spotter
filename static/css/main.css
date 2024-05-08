@@ -27,3 +27,14 @@
     font-weight: 700;
     padding-bottom: 1rem;
   }
+
+  .player  *{
+    text-align: center;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+  }
+
+  .vid {
+    text-align: left;
+  }
+  
