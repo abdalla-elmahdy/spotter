@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 
 from util.mixins import OwnerRequiredMixin
 from .forms import SessionForm, WorkoutForm
@@ -44,7 +45,7 @@ class DashboardView(LoginRequiredMixin ,generic.DetailView):
     template_name = "plans/dashboard.html"
 
     def get_object(self, queryset=None):
-        queryset = CustomUser.objects.get(id=self.request.user.id).sessions.all()
+        queryset = CustomUser.objects.get(id=self.request.user.id).sessions.filter(state__exact="UP")
         obj = queryset.first()
         return obj
 
@@ -174,3 +175,16 @@ class SessionApiView(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView):
         queryset = CustomUser.objects.get(id=self.request.user.id).sessions.all()
         obj = queryset.first()
         return obj
+
+
+class SessionManagerView(OwnerRequiredMixin,LoginRequiredMixin, generic.UpdateView):
+    model = Session
+    context_object_name = "session"
+    template_name = "plans/session_manager.html"
+    form_class = SessionForm
+
+    def post(self, request, pk):
+        session = get_object_or_404(Session, pk=pk)
+        session.state = "FN"
+        session.save()
+        return HttpResponseRedirect(reverse("plans:dashboard"))

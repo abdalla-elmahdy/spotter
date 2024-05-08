@@ -30,3 +30,4 @@ class WorkoutForm(ModelForm):
         help_texts = {
             "break_time": " Time between sets (in seconds)"
         }
+

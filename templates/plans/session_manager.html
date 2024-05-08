@@ -30,9 +30,13 @@
           <video id="webcam" style="width: 1280px; height: 720px; position: abso" autoplay playsinline></video>
           <canvas class="output_canvas" id="output_canvas" width="1280" height="720" style="position: absolute; left: 0px; top: 0px;"></canvas>
         </div>
+        </div>
+        <form action="{% url 'plans:session_manager' session.id %}"
+            method="post">
+        {% csrf_token %}
+        <input type="submit" value="Finish">
       </article>
     </section>
-    </div>
 
   <script id="rendered-js" type="module" src="{% static 'scripts/session_manager.js' %}"></script>
 {% endblock content %}

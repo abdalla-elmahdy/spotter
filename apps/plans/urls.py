@@ -46,6 +46,11 @@ urlpatterns = [
         name="session_api",
     ),
     path(
+        "session-manager/<int:pk>",
+        views.SessionManagerView.as_view(),
+        name="session_manager"
+    ),
+    path(
         "",
         views.SessionListView.as_view(),
         name="list",
