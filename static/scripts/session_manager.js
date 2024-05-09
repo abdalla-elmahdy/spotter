@@ -81,7 +81,7 @@ else {
 function enableCam(event) {
     
     if (!poseLandmarker && !sessionData) {
-        console.log("Wait! Data still loading");
+        feedbackPanel.innerText = "Wait! Data still loading";
         return;
     }
     if (webcamRunning === true) {
