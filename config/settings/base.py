@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     "allauth",
     "allauth.account",
+    "rest_framework",
     # local apps
     "apps.accounts.apps.AccountsConfig",
     "apps.pages.apps.PagesConfig",
@@ -54,6 +55,7 @@ ACCOUNT_FORMS = {
 ACCOUNT_MAX_EMAIL_ADDRESSES = 1
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_UNIQUE_EMAIL = True
 
 

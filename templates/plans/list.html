@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+{% block title %}
+  Upcoming Sessions
+{% endblock title %}
+{% block content %}
+  <h1>Upcoming Sessions</h1>
+  {% if session_list %}
+    {% for session in session_list %}
+      <article>
+        <h2>
+          <a href="{{ session.get_absolute_url }}">{{ session.time }}</a>
+        </h2>
+        <a href="{% url 'plans:detail' session.id %}" role="button">Edit session</a>
+        <a href="{% url 'plans:delete' session.id %}" role="button">Delete session</a>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>You don't have any sessions yet</p>
+    <a href="{% url 'plans:create' %}" role="button">Add session</a>
+  {% endif %}
+{% endblock content %}

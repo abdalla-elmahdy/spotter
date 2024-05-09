@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+{% block title %}
+  Update Workout
+{% endblock title %}
+{% block content %}
+  <h2>Add Workout</h2>
+  <form action="{% url 'plans:workout_update' workout.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+  </form>
+{% endblock %}

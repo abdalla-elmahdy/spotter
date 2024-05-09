@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}
+    Session Manager
+{% endblock title %}
+
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js"
+    crossorigin="anonymous"></script>
+{% endblock scripts %}
+
+{% block content %}
+<section id="session" class="invisible">
+    <h2>Session Manager</h2>
+    <article class="player">
+
+      <p>Stand in front of your webcam to get real-time pose landmarker detection.</br>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
+      <article id="feedback_panel"></article>
+      <div class="counter">
+
+        <button id="counter">Counter</button>
+      </div>
+      <div id="liveView" class="videoView">
+        <button id="webcamButton" class="mdc-button mdc-button--raised">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">ENABLE WEBCAM</span>
+        </button>
+        <div style="position: relative;" class="vid">
+          <video id="webcam" style="width: 1280px; height: 720px; position: abso" autoplay playsinline></video>
+          <canvas class="output_canvas" id="output_canvas" width="1280" height="720" style="position: absolute; left: 0px; top: 0px;"></canvas>
+        </div>
+        </div>
+        <form action="{% url 'plans:session_manager' session.id %}"
+            method="post">
+        {% csrf_token %}
+        <input type="submit" value="Finish">
+      </article>
+    </section>
+
+  <script id="rendered-js" type="module" src="{% static 'scripts/session_manager.js' %}"></script>
+{% endblock content %}

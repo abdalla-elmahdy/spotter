@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+{% block title %}
+  Delete Session
+{% endblock title %}
+{% block content %}
+  <article>
+    <h2>
+      Are you sure you want to delete this session?
+    </h2>
+    <form action="{% url 'plans:delete' session.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Delete">
+      <a href="{% url 'plans:detail' session.id %}">Cancel</a>
+    </form>
+  </article>
+{% endblock %}

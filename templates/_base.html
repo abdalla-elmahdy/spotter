@@ -18,6 +18,8 @@
         Spotter
         {% endblock title %}
     </title>
+    {% block scripts %}
+    {% endblock scripts %}
   </head>
   <body>
     <header class="container">
@@ -34,14 +36,17 @@
           <ul>
             {% if user.is_authenticated %}
               <li>
-                <a href="#" role="button">Dashboard</a>
+                <a href="{% url 'plans:dashboard' %}" role="button">Dashboard</a>
               </li>
               <li>
                 <details role="list" dir="rtl" class="dropdown">
-                  <summary aria-haspopup="listbox" role="link">Welcome {{ user.first_name }}</summary>
+                  <summary aria-haspopup="listbox" role="link">Welcome {{ user.username }}</summary>
                   <ul role="listbox">
                     <li>
-                      <a href="#">My Plans</a>
+                      <a href="{% url 'plans:create' %}">New Session</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'plans:list' %}">Planned Sessions</a>
                     </li>
                     <li>
                       <a href="{% url 'account_change_password' %}">Change Password</a>
